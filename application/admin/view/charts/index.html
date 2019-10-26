@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" rem="1920">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>停车场</title>
+    <link rel="stylesheet" href="/flower2/public/static/charts/css/index.css">
+    <link rel="stylesheet" href="/flower2/public/static/charts/css/rem.css">
+    <script src="/flower2/public/static/charts/js/time.js"></script>
+    <script src="/flower2/public/static/charts/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/v-charts/lib/index.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
+</head>
+
+<body>
+<!-- 头部开始 -->
+<div id="app">
+    <header style="color: #000000">
+        <div class="logo">
+            <!--<img src="/flower2/public/static/charts/img/logo.png" alt="">-->
+        </div>
+        <span>数据管理可视化</span>
+        <div class="header-right">
+            <div class="time">
+                <span class="time1">00</span>
+                <span>:</span>
+                <span class="time1">00</span>
+                <span>:</span>
+                <span class="time1">00</span>
+            </div>
+            <div class="date">
+                <span class="date1">0000</span>
+                <span>年</span>
+                <span class="date1">00</span>
+                <span>月</span>
+                <span class="date1">00</span>
+                <span>日</span>
+            </div>
+        </div>
+    </header>
+    <!-- 头部结束 -->
+
+    <!-- content开始 -->
+    <div class="all">
+        <!-- 中间部分开始 -->
+        <ve-histogram :data="charData"></ve-histogram>
+    </div>
+    <div class="car-content-top">
+    </div>
+    <!-- 中间部分结束 -->
+</div>
+<!-- content结束 -->
+</body>
+</html>
+<script>
+    new Vue({
+        el:'#app',
+        data:function(){
+            return{
+                charData:{
+                    columns: ['日期', '销售额', '访问用户', '下单用户'],
+                    rows: [
+                        {'日期': '1月1日', '销售额': 58123, '访问用户': 32371, '下单用户': 19810},
+                        {'日期': '2月2日', '销售额': 25223, '访问用户': 12328, '下单用户': 45398},
+                        {'日期': '3月3日', '销售额': 63123, '访问用户': 52381, '下单用户': 58722},
+                        {'日期': '4月4日', '销售额': 84123, '访问用户': 85632, '下单用户': 58742},
+                        {'日期': '5月5日', '销售额': 63123, '访问用户': 25745, '下单用户': 57985},
+                        {'日期': '6月6日', '销售额': 37123, '访问用户': 65425, '下单用户': 65489}
+                    ]
+
+                }
+            }
+        }
+    });
+
+    function contentMap() {
+        let myChart3 = echarts.init(document.querySelector(".car-content-top"));
+        // app.title = '环形图';
+        let option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        {value: 335, name: '直接访问'},
+                        {value: 310, name: '邮件营销'},
+                        {value: 234, name: '联盟广告'},
+                        {value: 135, name: '视频广告'},
+                        {value: 1548, name: '搜索引擎'}
+                    ]
+                }
+            ]
+        };
+        myChart3.setOption(option);
+    }
+</script>
